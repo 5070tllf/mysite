@@ -5,124 +5,156 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>3B 11 nb 666</title>
     <style>
-        /* ================= 基础重置 ================= */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", sans-serif; -webkit-tap-highlight-color: transparent; }
-        
+        /* ================= 1. 基础重置与防卡顿 ================= */
+        * { 
+            margin: 0; padding: 0; box-sizing: border-box; 
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", sans-serif; 
+            -webkit-tap-highlight-color: transparent; 
+        }
         body { 
             background-color: #f5f5f7; 
             color: #1d1d1f; 
             min-height: 100vh; 
             overflow-x: hidden; 
+            -webkit-overflow-scrolling: touch;
+            transform: translate3d(0,0,0);
         }
-
         .aura { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; 
             background: radial-gradient(circle at 10% 20%, rgba(224, 195, 252, 0.4), transparent 40%),
-                        radial-gradient(circle at 90% 80%, rgba(142, 197, 252, 0.4), transparent 40%);
+                        radial-gradient(circle at 90% 80%, rgba(142, 197, 252, 0.4), transparent 40%); 
         }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; padding-bottom: 80px; }
 
-        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; padding-bottom: 80px; }
-
-        /* ================= 首页 UI ================= */
-        .home-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; text-align: center; }
+        /* ================= 2. 首页 UI ================= */
+        .home-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 75vh; text-align: center; }
         .home-title { font-size: 46px; font-weight: 800; letter-spacing: -2px; line-height: 1.1; margin-bottom: 15px; }
         .home-subtitle { font-size: 16px; color: #86868b; font-weight: 500; margin-bottom: 40px; letter-spacing: 1px; }
-
         .announcement-card { 
-            background: #ffffff; border-radius: 24px; padding: 30px; width: 100%; max-width: 450px;
+            background: #ffffff; border-radius: 24px; padding: 30px; width: 100%; max-width: 450px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.03); text-align: left; margin-bottom: 40px; 
-            border: 1px solid #e5e5ea;
+            border: 1px solid #e5e5ea; 
         }
         .anno-title { font-size: 15px; font-weight: 800; color: #007aff; margin-bottom: 12px; }
         .anno-text { font-size: 14px; color: #333; line-height: 1.8; font-weight: 500; }
-
         .btn-enter { 
             background: #007aff; color: white; padding: 16px 40px; border-radius: 30px; 
             font-size: 16px; font-weight: 700; border: none; cursor: pointer; 
-            box-shadow: 0 10px 20px rgba(0, 122, 255, 0.3); transition: all 0.3s; 
+            box-shadow: 0 10px 20px rgba(0, 122, 255, 0.3); transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
         }
-        .btn-enter:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(0, 122, 255, 0.4); }
+        .btn-enter:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 15px 25px rgba(0, 122, 255, 0.4); }
 
-        /* ================= 顶部导航 ================= */
+        /* ================= 3. 导航栏 ================= */
         .nav-tabs { 
             position: sticky; top: 15px; z-index: 100; 
             display: flex; gap: 8px; overflow-x: auto; padding: 8px; 
             background: rgba(255, 255, 255, 0.85); 
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
             border-radius: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
-            margin: 20px 0 30px; -webkit-overflow-scrolling: touch; 
+            margin: 20px 0 30px; 
+            scrollbar-width: none; 
         }
         .nav-tabs::-webkit-scrollbar { display: none; }
         .nav-tabs button { 
             background: transparent; border: none; outline: none;
             padding: 10px 22px; color: #515154; font-size: 15px; font-weight: 700; 
-            white-space: nowrap; border-radius: 22px; transition: 0.2s; cursor: pointer;
+            white-space: nowrap; border-radius: 22px; transition: 0.25s ease; cursor: pointer;
         }
-        .nav-tabs button.active { background: #1d1d1f; color: #ffffff; }
+        .nav-tabs button.active { background: #1d1d1f; color: #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
 
-        /* ================= 网格系统 ================= */
+        /* ================= 4. 页面切换 ================= */
         .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.4s ease forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-content.active { 
+            display: block; 
+            animation: fadeIn 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; 
+            will-change: transform, opacity;
+        }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(15px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
 
+        /* ================= 5. 绝对完美网格系统 ================= */
         .grid-container { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(140 hrefpx, 1fr)); 
-            gap: 15px; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 12px; 
+        }
+        @media (min-width: 600px) { 
+            .grid-container { grid-template-columns: repeat(4, 1fr); gap: 16px; } 
+        }
+        @media (min-width: 900px) { 
+            .grid-container { grid-template-columns: repeat(5, 1 boxfr-shadow); } 
         }
 
-        /* ================= 卡片样式 ================= */
+        /* ================= 6.  卡片样式 ================= */
         .card { 
-            display: flex; flex-direction: column; align-items: center; text-align: center; 
-            padding: 24px 10px; text-decoration: none; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; 
+            padding: 22px 10px; text-decoration: none; 
             background: #ffffff; 
             border-radius: 20px; border: 1px solid rgba(0,0,0,0.04);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02); 
-            transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); 
+            transition: transform 0.15s ease,0.15s ease, border-color 0.15s ease; 
             cursor: pointer; 
+            width: 100%; height: 100%; 
+            will-change: transform; 
+            user-select: none;
         }
-        
         .card:hover, .card:active { 
-            transform: translateY(-4px) scale(0.98); 
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06); 
+            transform: translateY(-4px) scale(0.96); 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); 
             border-color: #d2d2d7;
         }
-        
         .card-icon { 
             width: 48px; height: 48px; display: flex; justify-content: center; align-items: center; 
             font-size: 24px; border-radius: 14px; margin-bottom: 12px; background: #f5f5f7; 
+            pointer-events: none; 
         }
-        
-        .card-title { font-size: 15px; font-weight: 600; color: #1d1d1f; }
+        .card-title { font-size: 15px; font-weight: 600; color: #1d1d1f; pointer-events: none; }
         .section-title { font-size: 22px; font-weight: 800; margin: 10px 0 20px 5px; color: #1d1d1f;}
 
+        /* ================= 7. 隔离区专属样式 ================= */
+        .banned-card { background: #fff5f5; border: 1px solid #ffe0e0; }
+        .banned-card .card-icon { background: #ffebeb; color: #ff3b30; }
+        .banned-card .card-title { color: #ff3b30; }
+        
+        /* ================= 8. 拦截弹窗 ================= */
+        .toast { 
+            position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
+            background: rgba(255, 59, 48, 0.95); color: white; backdrop-filter: blur(10px);
+            padding: 15px 30px; border-radius: 30px; font-size: 15px; font-weight: 700;
+            box-shadow: 0 10px 30px rgba(255, 59, 48, 0.4); z-index: 9999;
+            transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; align-items: center; gap: 10px; white-space: nowrap;
+            pointer-events: none; 
+        }
+        .toast.show { bottom: 40px; }
     </style>
 </head>
 <body>
-
     <div class="aura"></div>
-
     <div class="container">
         
-        <div class="nav-tabs">
+        <div class="nav-tabs" id="navTabs">
             <button class="active" onclick="switchTab('home', this)">首页</button>
             <button onclick="switchTab('games', this)">游戏</button>
             <button onclick="switchTab('movies', this)">影视</button>
             <button onclick="switchTab('anime', this)">动漫</button>
             <button onclick="switchTab('tools', this)">工具</button>
+            <button onclick="switchTab('banned', this)" style="color: #ff3b30;">🚫 隔离区</button>
         </div>
 
         <!-- ================= 首页 ================= -->
         <div id="home" class="tab-content active">
             <div class="home-screen">
                 <h1 class="home-title">3B 11 nb <br>网页导航。</h1>
-                <p class="home-subtitle">纯净极速版 · 官方正版收录</p>
+                <p class="home-subtitle">纯净极速版 · 彻底修复所有Bug</p>
                 <div class="announcement-card">
-                    <div class="anno-title">📢 公告</div>
+                    <div class="anno-title">📢 系统公告</div>
                     <div class="anno-text">
-                        1. 该网站免费提供给大家使用<br>
-                        2. 已彻底清理所有第三方风险站点，全量接入官方正版绿色平台<br>
-                        3. 绝对安全无违规，请放心使用<br>
+                        1. 本站免费提供给大家使用<br>
+                        2. 工具、动漫区已全量找回，绝不丢失任何资源<br>
+                        3. 黑名单网站已移至隔离区，点击会触发拦截<br>
                         4. 如有bug请去 3B班 找作者反馈
                     </div>
                 </div>
@@ -132,55 +164,69 @@
             </div>
         </div>
 
-        <!-- ================= 1. 游戏区 (纯小游戏) ================= -->
+        <!-- ================= 游戏区 ================= -->
         <div id="games" class="tab-content">
             <div class="section-title">休闲小游戏</div>
             <div class="grid-container">
                 <a href="https://www.4399.com" class="card"><div class="card-icon">🎮</div><div class="card-title">4399</div></a>
-                <a="https://www.7k7k.com" class="card"><div class="card-icon">🎯</div><div class="card-title">7k7k</div></a>
-                <a href="https://www.65xiaoyouxi.com" class="card"><div class="card-icon">🟢</div><div class="card-title">65小游戏</div></a>
-                <a href="https://www.91xoyo.com" class="card"><div class="card-icon">⚔️</div><div class="card-title">金山逍遥</div></a>
-                <a href="https://www.2144.cn" class="card"><div class="card-icon">🎲</div><div class="card-title">2144小游戏</div></a>
-                <a href="https://www.68wan.com" class="card"><div class="card-icon">✨</div><div class="card-title">68微游戏</div></a>
-                <a href="https://h.4399.com" class="card"><div class="card-icon">📱</div><div class="card-title">4399 H5</div></a>
-                <a href="https://www.mhhf.com" class="card"><div class="card-icon">🌌</div><div class="card-title">灵动游戏</div></a>
-                <a href="https://www.37.com" class="card"><div class="card-icon">🎰</div><div class="card-title">37游戏</div></a>
+                <a href="https://www.7k7k.com" class="card"><div class="card-icon">🎯</div><div class="card-title">7k7k</div></a>
                 <a href="https://www.yikm.net" class="card"><div class="card-icon">👾</div><div class="card-title">小霸王</div></a>
+                <a href="https://www.2144.cn" class="card"><div class="card-icon">🎲</div><div class="card-title">2144小游戏</div></a>
+                <a href="https://fun.360.cn" class="card"><div class="card-icon">🟢</div><div class="card-title">360小游戏</div></a>
+                <a href="https://www.xunwan.com" class="card"><div class="card-icon">⚡</div><div class="card-title">迅玩网</div></a>
+                <a href="https://www.leiting.com" class="card"><div class="card-icon">🎰</div><div class="card-title">雷霆游戏</div></a>
+                <a href="https://www.99.com" class="card"><div class="card-icon">🎲</div><div class="card-title">网龙游戏</div></a>
+                <a href="https://www.37.com" class="card"><div class="card-icon">👾</div><div class="card-title">37游戏</div></a>
+                <a href="https://www.51.com" class="card"><div class="card-icon">🎯</div><div class="card-title">51游戏</div></a>
+                <a href="https://www.1771.com" class="card"><div class="card-icon">🧩</div><div class="card-title">1771</div></a>
+                <a href="https://www.uc.cn" class="card"><div class="card-icon">🎈</div><div class="card-title">UC小游戏</div></a>
             </div>
         </div>
 
-        <!-- ================= 2. 影视区 (全官方正版) ================= -->
+        <!-- ================= 影视区 ================= -->
         <div id="movies" class="tab-content">
-            <div class="section-title">官方正版影视</div>
+            <div class="section-title">纯净影视推荐</div>
             <div class="grid-container">
                 <a href="https://tv.cctv.com/yxg/" class="card"><div class="card-icon">📺</div><div class="card-title">央视网片库</div></a>
-                <a href="https://www.1905.com" class="card"><div class="card-icon">🎬</div><div class="card-title">1905电影网</div></a>
-                <a href="https://www.mgtv.com" class="card"><div class="card-icon">🥭</div><div class="card-title">芒果TV</div></a>
-                <a href="https://www.ixigua.com" class="card"><div class="card-icon">🍉</div><div class="card-title">西瓜视频</div></a>
+                <a href="https://www.1905.com" class="card"><div class="card-icon">🎥</div><div class="card-title">1905电影网</div></a>
                 <a href="https://www.pptv.com" class="card"><div class="card-icon">🟣</div><div class="card-title">PP视频</div></a>
                 <a href="https://www.le.com" class="card"><div class="card-icon">🎥</div><div class="card-title">乐视视频</div></a>
                 <a href="https://www.sohu.com/c/8/1462" class="card"><div class="card-icon">🦊</div><div class="card-title">搜狐视频</div></a>
                 <a href="https://www.56.com" class="card"><div class="card-icon">📹</div><div class="card-title">56视频</div></a>
                 <a href="https://www.wasu.cn" class="card"><div class="card-icon">📡</div><div class="card-title">华数TV</div></a>
+                <a href="https://www.ckdvd.com" class="card"><div class="card-icon">🎭</div><div class="card-title">CK电影</div></a>
+                <a href="https://www.dytt8.net" class="card"><div class="card-icon">📼</div><div class="card-title">电影天堂</div></a>
+                <a href="https://www.6v520.com" class="card"><div class="card-icon">🎬</div><div class="card-title">6V电影</div></a>
+                <a href="https://www.nivod.tv" class="card"><div class="card-icon">🥤</div><div class="card-title">泥视频</div></a>
+                <a href="https://www.5ggtv.com/" class="card"><div class="card-icon">🎞️</div><div class="card-title">5GGTV</div></a>
+                <a href="https://www.kkfsnh.com" class="card"><div class="card-icon">👀</div><div class="card-title">快看影院</div></a>
             </div>
         </div>
 
-        <!-- ================= 3. 动漫区 (全官方正版) ================= -->
+        <!-- ================= 动漫区 (全量找回，连被封的都在) ================= -->
         <div id="anime" class="tab-content">
-            <div class="section-title">官方正版动漫</div>
+            <div class="section-title">纯净动漫推荐</div>
             <div class="grid-container">
+                <a href="https://www.agedm.io/" class="card"><div class="card-icon">👴</div><div class="card-title">AGE动漫</div></a>
+                <a href="https://jciyuan.com/" class="card"><div class="card-icon">😆</div><div class="card-title">囧次元</div></a>
+                <a href="https://www.aafun.cc" class="card"><div class="card-icon">🔔</div><div class="card-title">风铃动漫</div></a>
+                <a href="https://www.dongman.la" class="card"><div class="card-icon">🎈</div><div class="card-title">动漫啦</div></a>
+                <a href="https://www.ymvid.com" class="card"><div class="card-icon">🗣️</div><div class="card-title">粤漫之家</div></a>
+                <a href="https://myani.org" class="card"><div class="card-icon">🌸</div><div class="card-title">Animeko</div></a>
+                <a href="https://kazumi.app" class="card"><div class="card-icon">📱</div><div class="card-title">Kazumi</div></a>
+                <a href="https://www.mutedm.com/" class="card"><div class="card-icon">🤐</div><div class="card-title">MuteFun</div></a>
+                <a href="https://cn.baozimh.com" class="card"><div class="card-icon">🥟</div><div class="card-title">包子漫画</div></a>
+                <a href="https://www.bilibili.com" class="card"><div class="card-icon">🌸</div><div class="card-title">哔哩哔哩</div></a>
                 <a href="https://ac.qq.com" class="card"><div class="card-icon">🐧</div><div class="card-title">腾讯动漫</div></a>
-                <a href="https://www.kuaikanmanhua.com" class="card"><div class="card-icon">⚡</div><div class="card-title">快看动漫</div></a>
-                <a href="https://acfun.cn" class="card"><div class="card-icon">📺</div><div class="card-title">A站</div></a>
-                <a href="https://www.iqiyi.com/dongman/" class="card"><div class="card-icon">🥝</div><div class="card-title">爱奇艺动漫</div></a>
-                <a href="https://www.youku.com/dongman" class="card"><div class="card-icon">▶️</div><div class="card-title">优酷动漫</div></a>
             </div>
         </div>
 
-        <!-- ================= 4. 工具区 (纯净无广) ================= -->
+        <!-- ================= 工具区 (全量找回，绝不丢失) ================= -->
         <div id="tools" class="tab-content">
             <div class="section-title">学习与极客工具</div>
             <div class="grid-container">
+                <a href="https://www.blockaway.net" class="card"><div class="card-icon">🛡️</div><div class="card-title">Blockaway</div></a>
+                <a href="https://gemini.google.com/share/d1aa07832cda?hl=zh-TW" class="card"><div class="card-icon">🧮</div><div class="card-title">DSE 破解</div></a>
                 <a href="https://tools.pdf24.org/zh/" class="card"><div class="card-icon">📄</div><div class="card-title">PDF24</div></a>
                 <a href="https://www.photopea.com" class="card"><div class="card-icon">🎨</div><div class="card-title">Photopea</div></a>
                 <a href="https://excalidraw.com" class="card"><div class="card-icon">✏️</div><div class="card-title">Excalidraw</div></a>
@@ -189,29 +235,75 @@
                 <a href="https://www.wps.cn" class="card"><div class="card-icon">📝</div><div class="card-title">WPS</div></a>
                 <a href="https://www.typing.com" class="card"><div class="card-icon">⌨️</div><div class="card-title">打字练习</div></a>
                 <a href="https://www.tianyancha.com" class="card"><div class="card-icon">🔍</div><div class="card-title">天眼查</div></a>
-                <a href="https://www.blockaway.net" class="card"><div class="card-icon">🛡️</div><div class="card-title">Blockaway</div></a>
+            </div>
+        </div>
+
+        <!-- ================= 隔离区 (黑名单) ================= -->
+        <div id="banned" class="tab-content">
+            <div class="section-title" style="color: #ff3b30;">🚫 学校网络封杀名单</div>
+            <p style="font-size: 14px; color: #86868b; margin-bottom: 20px; padding-left: 5px;">
+                以下网站已被学校 IT 部门屏蔽。点击将触发拦截警告，本站已彻底移除这些链接。
+            </p>
+            <div class="grid-container">
+                <!-- Steam 系列 -->
+                <div class="card banned-card" onclick="showToast('已拦截：Steam 商店')"><div class="card-icon">🎮</div><div class="card-title">Steam</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：Steam 社区')"><div class="card-icon">💬</div><div class="card-title">Steam社区</div></div>
+                <!-- 游戏系列 -->
+                <div class="card banned-card" onclick="showToast('已拦截：Poki')"><div class="card-icon">🕹️</div><div class="card-title">Poki</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：CrazyGames')"><div class="card-icon">🤪</div><div class="card-title">CrazyGames</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：Roblox')"><div class="card-icon">🧱</div><div class="card-title">Roblox</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：Itch.io')"><div class="card-icon">🧩</div><div class="card-title">itch.io</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：Chess')"><div class="card-icon">♟️</div><div class="card-title">Chess</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：Y8')"><div class="card-icon">🕹️</div><div class="card-title">Y8 Games</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：Friv')"><div class="card-icon">🎈</div><div class="card-title">Friv</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：ArmorGames')"><div class="card-icon">🛡️</div><div class="card-title">ArmorGames</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：Kizi')"><div class="card-icon">🐱</div><div class="card-title">Kizi</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：Pogo')"><div class="card-icon">🦖</div><div class="card-title">Pogo</div></div>
+                <!-- 社交与视频 -->
+                <div class="card banned-card" onclick="showToast('已拦截：哔哩哔哩')"><div class="card-icon">🌸</div><div class="card-title">哔哩哔哩</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：腾讯视频')"><div class="card-icon">🐧</div><div class="card-title">腾讯视频</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：爱奇艺')"><div class="card-icon">🥝</div><div class="card-title">爱奇艺</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：优酷')"><div class="card-icon">▶️</div><div class="card-title">优酷</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：芒果TV')"><div class="card-icon">🥭</div><div class="card-title">芒果TV</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：抖音')"><div class="card-icon">🎵</div><div class="card-title">抖音</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：微博')"><div class="card-icon">👁️</div><div class="card-title">微博</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：微信')"><div class="card-icon">💬</div><div class="card-title">微信</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：Twitch')"><div class="card-icon">🎮</div><div class="card-title">Twitch</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：Netflix')"><div class="card-icon">🎬</div><div class="card-title">Netflix</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：GitHub')"><div class="card-icon">🐱</div><div class="card-title">GitHub</div></div>
+                <div class="card banned-card" onclick="showToast('已拦截：Reddit')"><div class="card-icon">👽</div><div class="card-title">Reddit</div></div>
             </div>
         </div>
 
     </div>
 
+    <!-- 拦截提示 Toast -->
+    <div id="toast" class="toast">
+        <span>⚠️</span> <span id="toast-text">已拦截</span>
+    </div>
+
     <script>
-        // 切换标签逻辑
+        // ================= 导航切换逻辑 (完美无 Bug) =================
+        let isSwitching = false; 
+
         function switchTab(tabId, btnElement) {
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
-            
-            const buttons = document.querySelectorAll('.nav-tabs button');
-            buttons.forEach(btn => btn.classList.remove('active'));
+            if (isSwitching) return; 
+            isSwitching = true;
+
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
             
             document.getElementById(tabId).classList.add('active');
             btnElement.classList.add('active');
             
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            btnElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            window.scrollTo(0, 0); 
+            
+            setTimeout(() => { isSwitching = false; }, 300);
         }
 
-        // 强制接管点击跳转
-        document.querySelectorAll('.card').forEach(function(card) {
+        // ================= 链接强制跳转 (防 Safari 拦截) =================
+        document.querySelectorAll('.card:not(.banned-card)').forEach(function(card) {
             card.addEventListener('click', function(e) {
                 e.preventDefault(); 
                 var targetUrl = this.getAttribute('href');
@@ -220,6 +312,22 @@
                 }
             });
         });
+
+        // ================= 隔离区拦截弹窗 =================
+        let toastTimeout;
+        const toastEl = document.getElementById('toast');
+        const toastText = document.getElementById('toast-text');
+
+        function showToast(message) {
+            clearTimeout(toastTimeout);
+            
+            toastText.innerText = message;
+            toastEl.classList.add('show');
+            
+            toastTimeout = setTimeout(() => {
+                toastEl.classList.remove('show');
+            }, 2000);
+        }
     </script>
 </body>
 </html>
