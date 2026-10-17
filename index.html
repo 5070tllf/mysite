@@ -12,28 +12,21 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* ================= 绝美动态背景 ================= */
+        /* ================= 极简动态背景 ================= */
         body {
             background-color: #f0f4f8;
             color: #1a202c;
             min-height: 100vh;
-            overflow-x: hidden;
             position: relative;
             padding-bottom: 50px;
             scroll-behavior: smooth; 
         }
 
-        .bg-blob {
-            position: fixed; border-radius: 50%; filter: blur(80px); z-index: -1;
-            opacity: 0.6; animation: float 10s infinite alternate ease-in-out;
-        }
-        .blob-1 { width: 300px; height: 300px; background: #a78bfa; top: -50px; left: -100px; }
-        .blob-2 { width: 250px; height: 250px; background: #60a5fa; top: 40%; right: -100px; animation-delay: -5s; }
-        .blob-3 { width: 200px; height: 200px; background: #fbcfe8; bottom: -50px; left: 20%; animation-delay: -2s; }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30px, 50px) scale(1.1); }
+        /* 去掉了容易卡顿的模糊光球，改用极简背景色 */
+        .bg-color {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            opacity: 0.4;
         }
 
         .container { max-width: 500px; margin: 0 auto; padding: 20px; }
@@ -42,9 +35,9 @@
         .header { text-align: center; padding: 30px 20px 20px; }
         .avatar {
             width: 80px; height: 80px; margin: 0 auto 15px;
-            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+            background: #ffffff;
             border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            font-size: 35px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            font-size: 35px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.8);
         }
         .header h1 { font-size: 24px; font-weight: 800; color: #1e293b; letter-spacing: 1px; }
@@ -52,19 +45,18 @@
         /* ================= 吸顶分类导航 ================= */
         .nav-tabs {
             position: sticky; top: 15px; z-index: 100;
-            display: flex; gap: 10px; overflow-x: auto; padding: 5px;
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-radius: 25px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            display: flex; gap: 10px; overflow-x: auto; padding: 8px;
+            background: rgba(255, 255, 255, 0.95); /* 提高不透明度防止渲染出错 */
+            border-radius: 25px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.5); margin-bottom: 30px;
             -webkit-overflow-scrolling: touch;
         }
         .nav-tabs::-webkit-scrollbar { display: none; }
         .nav-tabs a {
             text-decoration: none; padding: 10px 20px; color: #475569; font-size: 15px; font-weight: 600;
-            white-space: nowrap; border-radius: 20px; transition: all 0.3s;
+            white-space: nowrap; border-radius: 20px; transition: all 0.2s;
         }
-        .nav-tabs a:hover, .nav-tabs a:active { background: #ffffff; color: #4f46e5; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .nav-tabs a:hover, .nav-tabs a:active { background: #e2e8f0; color: #4f46e5; }
 
         /* ================= 内容分区 ================= */
         .section { margin-bottom: 40px; scroll-margin-top: 80px; }
@@ -81,28 +73,25 @@
         .card {
             display: flex; flex-direction: column; align-items: center; text-align: center;
             padding: 18px 10px; text-decoration: none;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.9); border-radius: 18px;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            background: #ffffff; /* 去掉毛玻璃，使用纯色卡片，绝对不卡 */
+            border-radius: 18px; border: 1px solid #f1f5f9;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
             cursor: pointer; /* 确保手指点上去有指针反馈 */
         }
 
         .card:hover, .card:active {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-            background: #ffffff;
+            transform: scale(0.96); /* 按下去的缩放反馈，更真实 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
         .card-icon {
             width: 45px; height: 45px; display: flex; justify-content: center; align-items: center;
             font-size: 22px; border-radius: 12px; margin-bottom: 10px; background: #f8fafc;
-            box-shadow: inset 0 2px 5px rgba(255,255,255,0.8), 0 2px 5px rgba(0,0,0,0.05);
             font-weight: bold;
         }
 
-        /* 图标底色微调 */
+        /* 图标底色 */
         .icon-game { background: #e0e7ff; color: #4338ca; }
         .icon-anime { background: #fce7f3; color: #db2777; }
         .icon-movie { background: #e0f2fe; color: #0284c7; }
@@ -115,33 +104,27 @@
 </head>
 <body>
 
-    <!-- 背景光球 -->
-    <div class="bg-blob blob-1"></div>
-    <div class="bg-blob blob-2"></div>
-    <div class="bg-blob blob-3"></div>
+    <div class="bg-color"></div>
 
     <div class="container">
         
-        <!-- 头部 -->
         <div class="header">
             <div class="avatar">🎮</div>
             <h1>NB</h1>
         </div>
 
-        <!-- 吸顶导航 -->
         <div class="nav-tabs">
             <a href="#games">🎮 小游戏</a>
-            <a href="#anime">📺 动漫追番</a>
-            <a href="#movies">🎬 影视追剧</a>
-            <a href="#nb">🚀 被禁神器</a>
+            <a href="#anime">📺 动漫</a>
+            <a href="#movies">🎬 影视</a>
+            <a href="#nb">🚀 神器</a>
             <a href="#mat">📐 数学</a>
         </div>
 
-        <!-- ================= 1. 小游戏区 ================= -->
+        <!-- 1. 小游戏 -->
         <div class="section" id="games">
             <div class="section-title">🎮 免登录小游戏</div>
             <div class="grid-container">
-                <!-- 去掉了 target="_blank"，强制在当前页跳转 -->
                 <a href="https://poki.com/zh" class="card">
                     <div class="card-icon icon-game">🕹️</div>
                     <div class="card-title">Poki 游戏</div>
@@ -165,13 +148,13 @@
             </div>
         </div>
 
-        <!-- ================= 2. 动漫区 ================= -->
+        <!-- 2. 动漫 -->
         <div class="section" id="anime">
             <div class="section-title">📺 动漫追番</div>
             <div class="grid-container">
                 <a href="https://www.acfun.cn/" class="card">
                     <div class="card-icon icon-anime">📺</div>
-                    <div class="card-title">AcFun (A站)</div>
+                    <div class="card-title">AcFun</div>
                 </a>
                 <a href="https://www.agedm.io/" class="card">
                     <div class="card-icon icon-anime">👴</div>
@@ -196,9 +179,9 @@
             </div>
         </div>
 
-        <!-- ================= card3. 影视区 ================= -->
-        <div class="section" id-title="movies">
-            <div class="section-title">🎬 影视追">剧</div>
+        <!-- 3. 影视 -->
+        <div class="section" id="movies">
+            <div class="section-title">🎬 影视追剧</div>
             <div class="grid-container">
                 <a href="https://www.5ggtv.com/" class="card">
                     <div class="card-icon icon-movie">🎥</div>
@@ -211,8 +194,8 @@
                 <a href="https://www.kkys02.com/" class="card">
                     <div class="card-icon icon-movie">🍫</div>
                     <div class="card-title">可可影视</div>
-                </哔a>
-                <a href="哩https://v.ikanbot.com/" class="card">
+                </a>
+                <a href="https://v.ikanbot.com/" class="card">
                     <div class="card-icon icon-movie">🤖</div>
                     <div class="card-title">爱看机器人</div>
                 </a>
@@ -222,12 +205,12 @@
                 </a>
                 <a href="https://www.bilibili.com" class="card">
                     <div class="card-icon icon-movie">🌸</div>
-                    <div class="哔哩</div>
+                    <div class="card-title">哔哩哔哩</div>
                 </a>
             </div>
         </div>
         
-        <!-- ================= 4. 被禁神器 ================= -->
+        <!-- 4. 神器 -->
         <div class="section" id="nb">
             <div class="section-title">🚀 被禁开网站神器</div>
             <div class="grid-container">
@@ -238,18 +221,32 @@
             </div>
         </div>
 
-        <!-- ================= 5. 数学区 ================= -->
+        <!-- 5. 数学 -->
         <div class="section" id="mat">
             <div class="section-title">📐 数学</div>
             <div class="grid-container">
                 <a href="https://gemini.google.com/share/d1aa07832cda?hl=zh-TW" class="card">
                     <div class="card-icon icon-mat">🧮</div>
-                    <div class="card-title">DSE App 已破解</div>
+                    <div class="card-title">DSE 破解</div>
                 </a>
             </div>
         </div>
 
     </div>
+
+    <!-- 强力防拦截跳转脚本 -->
+    <script>
+        // 用 JS 强制接管所有的点击事件，无视系统的安全拦截
+        document.querySelectorAll('.card').forEach(function(card) {
+            card.addEventListener('click', function(e) {
+                e.preventDefault(); // 阻止默认的跳转行为
+                var targetUrl = this.getAttribute('href');
+                if(targetUrl && targetUrl !== '#') {
+                    window.location.href = targetUrl; // 强制在当前页跳转
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
