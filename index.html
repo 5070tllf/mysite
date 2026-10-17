@@ -3,139 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>我的主页</title>
+    <title>我的全能资源库</title>
     <style>
-        /* 基础重置 */
+        /* ================= 基础重置 ================= */
         * { 
             margin: 0; padding: 0; box-sizing: border-box; 
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Segoe UI", Roboto, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* 梦幻极光背景 */
+        /* ================= 绝美动态背景 ================= */
         body {
+            background-color: #f0f4f8;
+            color: #1a202c;
             min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center;
-            background: linear-gradient(120deg, #f6d365 0%, #fda085 50%, #f6d365 100%);
-            background-size: 200% 200%;
-            animation: auroraBG 15s ease infinite;
-            padding: 40px 20px;
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 50px;
         }
 
-        @keyframes auroraBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .bg-blob {
+            position: fixed; border-radius: 50%; filter: blur(80px); z-index: -1;
+            opacity: 0.6; animation: float 10s infinite alternate ease-in-out;
+        }
+        .blob-1 { width: 300px; height: 300px; background: #a78bfa; top: -50px; left: -100px; }
+        .blob-2 { width: 250px; height: 250px; background: #60a5fa; top: 40%; right: -100px; animation-delay: -5s; }
+        .blob-3 { width: 200px; height: 200px; background: #fbcfe8; bottom: -50px; left: 20%; animation-delay: -2s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
         }
 
-        /* 主卡片 */
-        .glass-card {
-            width: 100%; max-width: 400px;
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            border-radius: 35px;
-            padding: 40px 25px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            margin-bottom: 30px;
-        }
+        .container { max-width: 500px; margin: 0 auto; padding: 20px; }
 
-        /* 头像光晕 */
-        .avatar-wrap { width: 100px; height: 100px; margin: 0 auto 20px; position: relative; }
-        .avatar-wrap::after {
-            content: ''; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px;
-            border-radius: 50%; background: linear-gradient(45deg, #ff9a9e, #fecfef, #a18cd1);
-            z-index: -1; filter: blur(10px); opacity: 0.8; animation: pulseGlow 3s infinite alternate;
-        }
-        @keyframes pulseGlow { 0% { opacity: 0.5; } 100% { opacity: 1; } }
+        /* ================= 头部 ================= */
+        .header { text-align: center; padding: 30px 20px 20px; }
         .avatar {
-            width: 100%; height: 100%; border-radius: 50%;
-            background: white; display: flex; justify-content: center; align-items: center;
-            font-size: 45px; box-shadow: inset 0 -3px 10px rgba(0,0,0,0.05);
+            width: 80px; height: 80px; margin: 0 auto 15px;
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            font-size: 35px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+        .header h1 { font-size: 24px; font-weight: 800; color: #1e293b; letter-spacing: 1px; }
+
+        /* ================= 吸顶分类导航 ================= */
+        .nav-tabs {
+            position: sticky; top: 15px; z-index: 100;
+            display: flex; gap: 10px; overflow-x: auto; padding: 5px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-radius: 25px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.5); margin-bottom: 30px;
+            -webkit-overflow-scrolling: touch; scroll-behavior: smooth;
+        }
+        .nav-tabs::-webkit-scrollbar { display: none; }
+        .nav-tabs a {
+            text-decoration: none; padding: 10px 20px; color: #475569; font-size: 15px; font-weight: 600;
+            white-space: nowrap; border-radius: 20px; transition: all 0.3s;
+        }
+        .nav-tabs a:hover, .nav-tabs a:active { background: #ffffff; color: #4f46e5; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+
+        /* ================= 内容分区 ================= */
+        .section { margin-bottom: 40px; scroll-margin-top: 80px; }
+        .section-title {
+            font-size: 18px; font-weight: 800; color: #1e293b;
+            margin-bottom: 15px; display: flex; align-items: center; gap: 8px; padding-left: 5px;
         }
 
-        h1 { font-size: 26px; color: #2c3e50; margin-bottom: 8px; font-weight: 800; }
-        .subtitle { font-size: 14px; color: #7f8c8d; margin-bottom: 20px; font-weight: 500; }
-        .bio { font-size: 15px; color: #555; line-height: 1.7; }
-
-        /* 导航区域标题 */
-        .nav-title { font-size: 20px; font-weight: 800; color: #2c3e50; margin-bottom: 20px; text-shadow: 0 2px 5px rgba(255,255,255,0.8);}
-
-        /* 导航列表 */
-        .nav-list { 
-            width: 100%; max-width: 400px; 
-            display: flex; flex-direction: column; gap: 15px; 
+        /* ================= 双列网格排版（适合大量网站） ================= */
+        .grid-container {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
         }
-        
-        .nav-item {
-            display: flex; align-items: center; padding: 16px 20px; text-decoration: none;
-            background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(255,255,255,0.5);
-            border-radius: 20px; color: #2c3e50; font-weight: 700; font-size: 16px; 
+
+        .card {
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            padding: 18px 10px; text-decoration: none;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.9); border-radius: 18px;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
         }
-        
-        .nav-item:hover { 
-            background: white; 
-            transform: translateY(-3px) scale(1.02); 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
-            color: #764ba2;
+
+        .card:hover, .card:active {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            background: #ffffff;
         }
-        
-        .nav-icon { 
-            font-size: 20px; margin-right: 15px; 
-            background: rgba(118, 75, 162, 0.1); padding: 8px; border-radius: 12px;
+
+        .card-icon {
+            width: 45px; height: 45px; display: flex; justify-content: center; align-items: center;
+            font-size: 22px; border-radius: 12px; margin-bottom: 10px; background: #f8fafc;
+            box-shadow: inset 0 2px 5px rgba(255,255,255,0.8), 0 2px 5px rgba(0,0,0,0.05);
         }
+
+        /* 图标底色微调 */
+        .icon-game { background: #e0e7ff; color: #4338ca; }
+        .icon-anime { background: #fce7f3; color: #db2777; }
+        .icon-movie { background: #e0f2fe; color: #0284c7; }
+
+        .card-title { font-size: 14px; font-weight: 700; color: #1e293b; line-height: 1.2; }
+
     </style>
 </head>
 <body>
 
-    <!-- 个人信息卡片 -->
-    <div class="glass-card">
-        <div class="avatar-wrap">
-            <div class="avatar">👨‍💻</div>
-        </div>
-        <h1>不会英文会写外挂的我</h1>
-        <div class="subtitle">Designer & Developer</div>
-        <p class="bio">
-            欢迎来到我的网页跳转神器<br>
-            点击下方列表，快速访问我的常用网站。
-        </p>
-    </div>
+    <!-- 背景光球 -->
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    <div class="bg-blob blob-3"></div>
 
-    <!-- 导航列表 -->
-    <div class="nav-title">前往</div>
-    
-    <div class="nav-list">
-        <!-- 如果点击没反应，请确保网址以 https:// 开头 -->
-        <a href="https://www.bilibili.com" target="_blank" class="nav-item">
-            <span class="nav-icon">📺</span> 哔哩哔哩 (B站)
-        </a>
+    <div class="container">
         
-        <a href="https://github.com/5070tlf" target="_blank" class="nav-item">
-            <span class="nav-icon">🐱</span> 我的 GitHub 主页
-        </a>
-        
-        <a href="https://www.zhihu.com" target="_blank" class="nav-item">
-            <span class="nav-icon">💡</span> 知乎
-        </a>
-        
-        <a href="https://www.douyin.com" target="_blank" class="nav-item">
-            <span class="nav-icon">🎵</span> 抖音
-        </a>
-        
-        <a href="https://music.163.com" target="_blank" class="nav-item">
-            <span class="nav-icon">🎧</span> 网易云音乐
-        </a>
-        
-        <a href="https://youtude.com" target="_blank" class="nav-item">
-            <span class="nav-icon">🤫</span> youtube
-        </a>
-        
-        <a href="https://www.blockaway.net" target="_blank" class="nav-item">
-            <span class="nav-icon">🤫</span> 被禁止网站开启神器
-        </a>
+        <!-- 头部 -->
+        <div class="header">
+            <div class="avatar">🎮</div>
+            <h1>全能娱乐中心</h1>
+        </div>
+
+        <!-- 吸顶导航 -->
+        <div class="nav-tabs">
+            <a href="#games">🎮 小游戏</a>
+            <a href="#anime">📺 动漫追番</a>
+            <a href="#movies">🎬 影视追剧</a>
+        </div>
+
+        <!-- ================= 1. 小游戏区 ================= -->
+        <div class="section" id="games">
+            <div class="section-title">🎮 免登录小游戏</div>
+            <div class="grid-container">
+                
+                <a href="https://poki.com/zh" target="_blank" class="card">
+                    <div class="card-icon icon-game">🕹️</div>
+                    <div class="card-title">Poki 游戏</div>
+                </a>
+
+                <a href="https://www.crazygames.com/" target="_blank" class="card">
+                    <div class="card-icon icon-game">🤪</div>
+                    <div class="card-title">CrazyGames</div>
+                </a>
+
+                <a href="https://u.ali213.net/" target="_blank" class="card">
+                    <div class="card-icon icon-game">⚔️</div>
+                    <div class="card-title">游侠小游戏</div>
+                </a>
+
+                <a href="https://cn.pigame.cc/" target="_blank" class="card">
+                    <div class="card-icon icon-game">🐷</div>
+                    <div class="card-title">小猪秒玩</div>
+                </a>
+
+                <a href="https://gamer.qq.com/" target="_blank" class="card">
+                    <div class="card-icon icon-game">🐧</div>
+                    <div class="card-title">腾讯云游戏</div>
+                </a>
+
+            </div>
+        </div>
+
+        <!-- ================= 2. 动漫区 ================= -->
+        <div class="section" id="anime">
+            <div class="section-title">📺 动漫追番</div>
+            <div class="grid-container">
+                
+                <a href="https://www.acfun.cn/" target="_blank" class="card">
+                    <div class="card-icon icon-anime">📺</div>
+                    <div class="card-title">AcFun (A站)</div>
+                </a>
+
+                <a href="https://www.agedm.io/" target="_blank" class="card">
+                    <div class="card-icon icon-anime">👴</div>
+                    <div class="card-title">AGE动漫</div>
+                </a>
+
+                <a href="https://jciyuan.com/" target="_blank" class="card">
+                    <div class="card-icon icon-anime">😆</div>
+                    <div class="card-title">囧次元</div>
+                </a>
+
+                <a href="https://omofun.link" target="_blank" class="card">
+                    <div class="card-icon icon-anime">🦄</div>
+                    <div class="card-title">OmoFun</div>
+                </a>
+
+                <a href="https://dm.xifanacg.com/" target="_blank" class="card">
+                    <div class="card-icon icon-anime">🥣</div>
+                    <div class="card-title">稀饭动漫</div>
+                </a>
+
+                <a href="https://www.mutedm.com/" target="_blank" class="card">
+                    <div class="card-icon icon-anime">🤐</div>
+                    <div class="card-title">MuteFun</div>
+                </a>
+
+            </div>
+        </div>
+
+        <!-- ================= 3. 影视区 ================= -->
+        <div class="section" id="movies">
+            <div class="section-title">🎬 影视追剧</div>
+            <div class="grid-container">
+                
+                <a href="https://www.5ggtv.com/" target="_blank" class="card">
+                    <div class="card-icon icon-movie">🎥</div>
+                    <div class="card-title">5GGTV</div>
+                </a>
+
+                <a href="https://www.freeok.mobi/" target="_blank" class="card">
+                    <div class="card-icon icon-movie">🆓</div>
+                    <div class="card-title">FreeOK</div>
+                </a>
+
+                <a href="https://www.kkys02.com/" target="_blank" class="card">
+                    <div class="card-icon icon-movie">🍫</div>
+                    <div class="card-title">可可影视</div>
+                </a>
+
+                <a href="https://v.ikanbot.com/" target="_blank" class="card">
+                    <div class="card-icon icon-movie">🤖</div>
+                    <div class="card-title">爱看机器人</div>
+                </a>
+
+                <a href="https://www.ixigua.com/channel/anime/" target="_blank" class="card">
+                    <div class="card-icon icon-movie">🍉</div>
+                    <div class="card-title">西瓜视频</div>
+                </a>
+
+                <a href="https://www.bilibili.com" target="_blank" class="card">
+                    <div class="card-icon icon-movie">🌸</div>
+                    <div class="card-title">哔哩哔哩</div>
+                </a>
+
+            </div>
+        </div>
 
     </div>
 
