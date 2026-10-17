@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的主页</title>
+    <style>
+        /* 基础设置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* 背景：柔和的动态渐变 */
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            background-size: 200% 200%;
+            animation: gradientBG 10s ease infinite;
+            padding: 20px;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 核心卡片：高级毛玻璃效果 */
+        .profile-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 30px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        /* 鼠标/手指悬停时卡片微微上浮 */
+        .profile-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* 头像：圆形+渐变边框 */
+        .avatar {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            color: white;
+            box-shadow: 0 10px 20px rgba(255, 154, 158, 0.4);
+        }
+
+        /* 文字排版 */
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .bio {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* 链接按钮组 */
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .link-btn {
+            display: block;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
+            box-shadow: 0 10px 20px rgba(37, 117, 252, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .link-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 25px rgba(37, 117, 252, 0.5);
+            opacity: 0.9;
+        }
+
+        /* 第二个按钮稍微换个颜色，显得有层次 */
+        .link-btn.secondary {
+            background: linear-gradient(45deg, #ff0844 0%, #ffb199 100%);
+            box-shadow: 0 10px 20px rgba(255, 8, 68, 0.3);
+        }
+        .link-btn.secondary:hover {
+            box-shadow: 0 15px 25px rgba(255, 8, 68, 0.5);
+        }
+
+        /* 底部版权文字 */
+        .footer-text {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 卡片主体 -->
+    <div class="profile-card">
+        
+        <!-- 头像（你可以把里面的 🚀 换成任何 Emoji，比如 🐱、🐶、👦） -->
+        <div class="avatar">🚀</div>
+        
+        <!-- 名字和简介（你可以在这里修改成你同学的资料） -->
+        <h1>我的同学</h1>
+        <div class="subtitle">前端开发初学者 / 摸鱼达人</div>
+        
+        <p class="bio">
+            欢迎来到我的个人主页！<br>
+            这是我用 iPad 亲手写代码，并在云端部署上线的网站。
+        </p>
+
+        <!-- 按钮区域（链接可以换成你同学的微信、QQ空间、B站等网址） -->
+        <div class="links">
+            <a href="#" class="link-btn">联系我 (微信/QQ)</a>
+            <a href="#" class="link-btn secondary">访问我的空间</a>
+        </div>
+
+        <div class="footer-text">
+            Powered by iPad & GitHub Pages
+        </div>
+    </div>
+
+</body>
+</html>
