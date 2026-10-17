@@ -20,7 +20,7 @@
             overflow-x: hidden;
             position: relative;
             padding-bottom: 50px;
-            scroll-behavior: smooth; /* 强制开启平滑滚动 */
+            scroll-behavior: smooth; 
         }
 
         .bg-blob {
@@ -86,6 +86,7 @@
             border: 1px solid rgba(255, 255, 255, 0.9); border-radius: 18px;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            cursor: pointer; /* 确保手指点上去有指针反馈 */
         }
 
         .card:hover, .card:active {
@@ -105,8 +106,8 @@
         .icon-game { background: #e0e7ff; color: #4338ca; }
         .icon-anime { background: #fce7f3; color: #db2777; }
         .icon-movie { background: #e0f2fe; color: #0284c7; }
-        .icon-nb { background: #fee2e2; color: #dc2626; } /* 新增红色系 */
-        .icon-mat-game { background: #dcfce7; color: #16a34a; } /* 新增绿色系 */
+        .icon-nb { background: #fee2e2; color: #dc2626; }
+        .icon-mat { background: #dcfce7; color: #16a34a; }
 
         .card-title { font-size: 14px; font-weight: 700; color: #1e293b; line-height: 1.2; }
 
@@ -140,23 +141,24 @@
         <div class="section" id="games">
             <div class="section-title">🎮 免登录小游戏</div>
             <div class="grid-container">
-                <a href="https://poki.com/zh" target="_blank" class="card">
+                <!-- 去掉了 target="_blank"，强制在当前页跳转 -->
+                <a href="https://poki.com/zh" class="card">
                     <div class="card-icon icon-game">🕹️</div>
                     <div class="card-title">Poki 游戏</div>
                 </a>
-                <a href="https://www.cra">zygames.com/" target="_blank" class="card">
-                    <div class🐷="card-icon icon-game">🤪</div>
-                    <</div class="card-title">CrazyGames</divdiv>
+                <a href="https://www.crazygames.com/" class="card">
+                    <div class="card-icon icon-game">🤪</div>
+                    <div class="card-title">CrazyGames</div>
                 </a>
-                <a href="https://u.ali213.net/" target="_blank" class="card">
+                <a href="https://u.ali213.net/" class="card">
                     <div class="card-icon icon-game">⚔️</div>
                     <div class="card-title">游侠小游戏</div>
                 </a>
-                <a href="https://cn.pigame.cc/" target="_blank" class="card">
-                    <div class="card-icon icon>
+                <a href="https://cn.pigame.cc/" class="card">
+                    <div class="card-icon icon-game">🐷</div>
                     <div class="card-title">小猪秒玩</div>
                 </a>
-                <a href="https://gamer.qq.com/" target="_blank" class="card">
+                <a href="https://gamer.qq.com/" class="card">
                     <div class="card-icon icon-game">🐧</div>
                     <div class="card-title">腾讯云游戏</div>
                 </a>
@@ -167,60 +169,60 @@
         <div class="section" id="anime">
             <div class="section-title">📺 动漫追番</div>
             <div class="grid-container">
-                <a href="https://www.acfun.cn/" target="_blank" class="card">
+                <a href="https://www.acfun.cn/" class="card">
                     <div class="card-icon icon-anime">📺</div>
                     <div class="card-title">AcFun (A站)</div>
                 </a>
-                <a href="https://www.agedm.io/" target="_blank" class="card">
+                <a href="https://www.agedm.io/" class="card">
                     <div class="card-icon icon-anime">👴</div>
                     <div class="card-title">AGE动漫</div>
                 </a>
-                <a href="https://jciyuan.com/" target="_blank" class="card">
+                <a href="https://jciyuan.com/" class="card">
                     <div class="card-icon icon-anime">😆</div>
                     <div class="card-title">囧次元</div>
                 </a>
-                <a href="https://omofun.link" target="_blank" class="card">
+                <a href="https://omofun.link" class="card">
                     <div class="card-icon icon-anime">🦄</div>
                     <div class="card-title">OmoFun</div>
                 </a>
-                <a href="https://dm.xifanacg.com/" target="_blank" class="card">
+                <a href="https://dm.xifanacg.com/" class="card">
                     <div class="card-icon icon-anime">🥣</div>
                     <div class="card-title">稀饭动漫</div>
                 </a>
-                <a href="https://www.mutedm.com/" target="_blank" class="card">
+                <a href="https://www.mutedm.com/" class="card">
                     <div class="card-icon icon-anime">🤐</div>
                     <div class="card-title">MuteFun</div>
                 </a>
             </div>
         </div>
 
-        <!-- ================= 3. 影视区 ================= -->
-        <div class="section" id="movies">
-            <div class="section-title">🎬 影视追剧</div>
+        <!-- ================= card3. 影视区 ================= -->
+        <div class="section" id-title="movies">
+            <div class="section-title">🎬 影视追">剧</div>
             <div class="grid-container">
-                <a href="https://www.5ggtv.com/" target="_blank" class="card">
+                <a href="https://www.5ggtv.com/" class="card">
                     <div class="card-icon icon-movie">🎥</div>
                     <div class="card-title">5GGTV</div>
                 </a>
-                <a href="https://www.freeok.mobi/" target="_blank" class="card">
+                <a href="https://www.freeok.mobi/" class="card">
                     <div class="card-icon icon-movie">🆓</div>
                     <div class="card-title">FreeOK</div>
                 </a>
-                <a href="https://www.kkys02.com/" target="_blank" class="card">
+                <a href="https://www.kkys02.com/" class="card">
                     <div class="card-icon icon-movie">🍫</div>
                     <div class="card-title">可可影视</div>
-                </a>
-                <a href="https://v.ikanbot.com/" target="_blank" class="card">
+                </哔a>
+                <a href="哩https://v.ikanbot.com/" class="card">
                     <div class="card-icon icon-movie">🤖</div>
                     <div class="card-title">爱看机器人</div>
                 </a>
-                <a href="https://www.ixigua.com/channel/anime/" target="_blank" class="card">
+                <a href="https://www.ixigua.com/channel/anime/" class="card">
                     <div class="card-icon icon-movie">🍉</div>
                     <div class="card-title">西瓜视频</div>
                 </a>
-                <a href="https://www.bilibili.com" target="_blank" class="card">
+                <a href="https://www.bilibili.com" class="card">
                     <div class="card-icon icon-movie">🌸</div>
-                    <div class="card-title">哔哩哔哩</div>
+                    <div class="哔哩</div>
                 </a>
             </div>
         </div>
@@ -229,7 +231,7 @@
         <div class="section" id="nb">
             <div class="section-title">🚀 被禁开网站神器</div>
             <div class="grid-container">
-                <a href="https://www.blockaway.net" target="_blank" class="card">
+                <a href="https://www.blockaway.net" class="card">
                     <div class="card-icon icon-nb">🛡️</div>
                     <div class="card-title">Blockaway</div>
                 </a>
@@ -240,7 +242,7 @@
         <div class="section" id="mat">
             <div class="section-title">📐 数学</div>
             <div class="grid-container">
-                <a href="https://gemini.google.com/share/d1aa07832cda?hl=zh-TW" target="_blank" class="card">
+                <a href="https://gemini.google.com/share/d1aa07832cda?hl=zh-TW" class="card">
                     <div class="card-icon icon-mat">🧮</div>
                     <div class="card-title">DSE App 已破解</div>
                 </a>
