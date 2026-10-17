@@ -12,14 +12,13 @@
             -webkit-tap-highlight-color: transparent; 
         }
         
-        /* ================= 2. 极光流体背景 (你选的) ================= */
+        /* ================= 2. 极光流体背景 ================= */
         body { 
             background: #000; 
             color: #fff; 
             min-height: 100vh; 
             overflow-x: hidden; 
             position: relative; 
-            /* 加上 iOS 的惯性滑动优化 */
             -webkit-overflow-scrolling: touch;
         }
         
@@ -60,7 +59,7 @@
         }
         .btn-enter:hover { transform: translateY(-3px) scale(1.02); background: rgba(255,255,255,0.2); box-shadow: 0 15px 25px rgba(0,0,0,0.3); }
 
-        /* ================= 4. 导航栏 (极光玻璃风) ================= */
+        /* ================= 4. 导航栏 ================= */
         .nav-tabs { 
             position: sticky; top: 15px; z-index: 100; 
             display: flex; gap: 8px; overflow-x: auto; padding: 8px; 
@@ -88,7 +87,7 @@
         @media (min-width: 600px) { .grid-container { grid-template-columns: repeat(4, 1fr); gap: 16px; } }
         @media (min-width: 900px) { .grid-container { grid-template-columns: repeat(5, 1fr); } }
 
-        /* ================= 7. 卡片 (极光玻璃质感) ================= */
+        /* ================= 7. 卡片 ================= */
         .card { 
             display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; 
             padding: 22px 10px; text-decoration: none; 
@@ -136,9 +135,10 @@
 
     <div class="container">
         
-        <!-- 导航栏 -->
+        <!-- 导航栏 (新增聊天室分类) -->
         <div class="nav-tabs" id="navTabs">
             <button class="active" onclick="switchTab('home', this)">首页</button>
+            <button onclick="switchTab('chat', this)">💬 聊天室</button>
             <button onclick="switchTab('games', this)">游戏</button>
             <button onclick="switchTab('movies', this)">影视</button>
             <button onclick="switchTab('anime', this)">动漫</button>
@@ -156,15 +156,34 @@
                     <div class="anno-title">📢 系统公告</div>
                     <div class="anno-text">
                         1. 本站免费提供给大家使用<br>
-                        2. UI 已全面升级为极光流体玻璃质感<br>
+                        2. 已新增“聊天室”功能，欢迎大家体验<br>
                         3. 资源已全量找回，黑名单请移步隔离区<br>
                         4. 如有bug请去 3B班 找作者反馈
+                        5. 被老师抓到，请勿说出该网站和作者
                     </div>
                 </div>
                 
-                <button class="btn-enter" onclick="switchTab('games', document.querySelectorAll('.nav-tabs button')[1])">
+                <button class="btn-enter" onclick="switchTab('games', document.querySelectorAll('.nav-tabs button')[2])">
                     立即进入探索 →
                 </button>
+            </div>
+        </div>
+
+        <!-- ================= 💬 聊天室 ================= -->
+        <div id="chat" class="tab-content">
+            <div class="home-screen">
+                <h1 class="home-title" style="font-size: 36px;">聊天室</h1>
+                <p class="home-subtitle" style="margin-bottom: 30px;">支持多人实时在线互动</p>
+                
+                <div class="glass-card" style="text-align: center; padding: 40px 20px;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">💬</div>
+                    <p class="anno-text" style="margin-bottom: 30px;">点击下方按钮进入聊天大厅，如果页面没有加载出来，请点击新窗口打开。</p>
+                    
+                    <!-- 这是一个跳转到你聊天室的超级大按钮 -->
+                    <a href="https://5070tllf.github.io/admin123/" target="_blank" class="btn-enter" style="display: inline-block; text-decoration: none; background: #07c160; border: none; box-shadow: 0 10px 20px rgba(7, 193, 96, 0.4);">
+                        进入聊天大厅 →
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -245,8 +264,8 @@
         <!-- ================= 隔离区 ================= -->
         <div id="banned" class="tab-content">
             <div class="section-title" style="color: #ff6b6b;">🚫 学校网络封杀名单</div>
-            <p style="font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 20px; padding-left: 5px;">
-                以下网站已被学校 IT 部门屏蔽。点击将触发拦截警告。
+            <p style="font-size: 14px; color: rgba(255,255,255,0.5); margin已被-bottom: 20px; padding-left: 5px;">
+                以下网站学校 IT 部门屏蔽。点击将触发拦截警告。
             </p>
             <div class="grid-container">
                 <div class="card banned-card" onclick="showToast('已拦截：Steam 商店')"><div class="card-icon">🎮</div><div class="card-title">Steam</div></div>
